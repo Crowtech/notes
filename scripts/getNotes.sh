@@ -74,7 +74,7 @@ On_IWhite='\033[0;107m'   # White
 if [ $# -eq 0 ]
 then
    echo "usage: getNotes.sh <url> <BASEENTITYCODE> <tag>"
-   echo "e.g. ./getNotes.sh http://localhost:8095 PER_USER1  phone "
+   echo "e.g. ./getNotes.sh http://localhost:8097 PER_USER1  phone "
    exit;
 fi
 mydate=`date -u +"%Y-%m-%dT%H:%M:%S.000Z"`
@@ -82,8 +82,7 @@ url=$1
 key=$2
 tag=$3
 echo ${mydate} $key $url  $message $tag
-KEYCLOAK_RESPONSE=`curl -s -X POST https://keycloak.gada.io/auth/realms/internmatch/protocol/openid-connect/token  -H "Content-Type: application/x-www-form-urlencoded" -d 'username=user1' -d 'password=WelcomeToTheHub121!' -d 'grant_type=password' -d 'client_id=internmatch'  -d 'client_secret=dc7d0960-2e1d-4a78-9eef-77678066dbd3'`
-#KEYCLOAK_RESPONSE=`curl -s -X POST https://keycloak.gada.io/auth/realms/internmatch/protocol/openid-connect/token  -H "Content-Type: application/x-www-form-urlencoded" -d 'username=user1' -d 'password=WelcomeToTheHub121!' -d 'grant_type=password' -d 'client_id=backend'  -d 'client_secret=6781baee-3b97-4b01-bcd4-b14aecd38fd8'`
+KEYCLOAK_RESPONSE=`curl -s -X POST https://keycloak.aible.app/auth/realms/aible/protocol/openid-connect/token  -H "Content-Type: application/x-www-form-urlencoded" -d 'username=employer' -d 'password=employer2020' -d 'grant_type=password' -d 'client_id=backend' `
 #echo $KEYCLOAK_RESPONSE
 #printf "${RED}Parsing access_token field, as we don't need the other elements:${NORMAL}\n"
 TOKEN=`echo "$KEYCLOAK_RESPONSE" | jq -r '.access_token'`

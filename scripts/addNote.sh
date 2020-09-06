@@ -74,7 +74,7 @@ On_IWhite='\033[0;107m'   # White
 if [ $# -ne 4 ]
 then
    echo "usage: addNote.sh <serverUl> <BASEENTITYCODE> <message> <tag>"
-   echo "e.g. ./addNote.sh http://localhost :8095 PER_USER1 'Hello everyone' phone "
+   echo "e.g. ./addNote.sh http://localhost:8097 PER_USER1 'Hello everyone' phone "
    exit;
 fi
 mydate=`date -u +"%Y-%m-%dT%H:%M:%S.000Z"`
@@ -84,10 +84,10 @@ tag=$4
 url=$1
 echo ${mydate} ${url}  $key $message $tag
 access_token=$(\
-    curl -s -X POST https://keycloak.gada.io/auth/realms/internmatch/protocol/openid-connect/token \
-    --user backend:6781baee-3b97-4b01-bcd4-b14aecd38fd8 \
+    curl -s -X POST https://keycloak.aible.app/auth/realms/aible/protocol/openid-connect/token \
+    --user backend:9997a0ce-c014-4873-a24b-ed84bd9d995b  \
     -H 'content-type: application/x-www-form-urlencoded' \
-    -d 'username=user1&password=WelcomeToTheHub121!&grant_type=password' | jq --raw-output '.access_token' \
+    -d 'username=user1&password=NarelleRachel2020&grant_type=password' | jq --raw-output '.access_token' \
  )
 #echo $KEYCLOAK_RESPONSE
 #printf "${RED}Parsing access_token field, as we don't need the other elements:${NORMAL}\n"
@@ -97,7 +97,7 @@ echo $TOKEN
 echo $url
 echo ""
 CR=`curl -X POST "${url}/v7/notes"  --header "Authorization: Bearer $TOKEN" -H "accept: */*" -H "Content-Type: application/json"  --header 'Accept: application/json'  -d "{\"id\":0,\"content\":\"${message}\",\"created\":\"${mydate}\",\"sourceCode\":\"PER_USER1\",\"tags\":[{\"name\":\"${tag}\",\"value\":0}],\"targetCode\":\"${key}\",\"updated\":\"${mydate}\"}"`
-#CR=`curl -X POST "https://internmatch-cyrus.gada.io/v7/notes"  --header "Authorization: Bearer $TOKEN" -H "accept: */*" -H "Content-Type: application/json"  --header 'Accept: application/json'  -d "{\"id\":0,\"content\":\"${message}\",\"created\":\"${mydate}\",\"sourceCode\":\"PER_USER1\",\"tags\":\"${tag}:0\",\"targetCode\":\"${key}\",\"updated\":\"${mydate}\"}"`
+#CR=`curl -X POST "https://aible-notes.crowtech.com.au/v7/notes"  --header "Authorization: Bearer $TOKEN" -H "accept: */*" -H "Content-Type: application/json"  --header 'Accept: application/json'  -d "{\"id\":0,\"content\":\"${message}\",\"created\":\"${mydate}\",\"sourceCode\":\"PER_USER1\",\"tags\":\"${tag}:0\",\"targetCode\":\"${key}\",\"updated\":\"${mydate}\"}"`
 echo -e "${Green}${CR}${Color_Off}\n"
 echo ""
 echo ""
