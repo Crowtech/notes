@@ -115,22 +115,22 @@ public class NoteResource {
 
 	private void notifyNoteGroup(Note note, NoteStatus noteStatus) {
 
-		GennyToken userToken = new GennyToken(accessToken.getRawToken());
-		ParentNote parentNote = ParentNote.findByCode(note.targetCode);
-
-		if (parentNote != null) {
-			String bridgeUrl = "http://erstwhile-wolf-genny-bridge-svc/api/service";//ConfigProvider.getConfig().getValue("quarkus.bridge.service.url", String.class);
-
-
-			QDataNoteMessage msg = new QDataNoteMessage(note, noteStatus);
-			msg.setRecipientCodeArray(parentNote.noteUsers.toArray(new String[0]));
-			log.info("Writing "+msg+" using "+bridgeUrl);
-
-
-			WriteToBridge.writeMessage(bridgeUrl, msg, userToken);
-		} else {
-			log.error("ParentNote is null for notes "+note.targetCode);
-		}
+//		GennyToken userToken = new GennyToken(accessToken.getRawToken());
+//		ParentNote parentNote = ParentNote.findByCode(note.targetCode);
+//
+//		if (parentNote != null) {
+//			String bridgeUrl = "http://erstwhile-wolf-genny-bridge-svc/api/service";//ConfigProvider.getConfig().getValue("quarkus.bridge.service.url", String.class);
+//
+//
+//			QDataNoteMessage msg = new QDataNoteMessage(note, noteStatus);
+//			msg.setRecipientCodeArray(parentNote.noteUsers.toArray(new String[0]));
+//			log.info("Writing "+msg+" using "+bridgeUrl);
+//
+//
+//			WriteToBridge.writeMessage(bridgeUrl, msg, userToken);
+//		} else {
+//			log.error("ParentNote is null for notes "+note.targetCode);
+//		}
 
 	}
 
