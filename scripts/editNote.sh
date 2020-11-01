@@ -82,7 +82,7 @@ url=$1
 id=$2
 content=$3
 #echo ${mydate} $url $id $content 
-KEYCLOAK_RESPONSE=`curl -s -X POST https://keycloak.aible.app/auth/realms/aible/protocol/openid-connect/token  -H "Content-Type: application/x-www-form-urlencoded" -d 'username=employer' -d 'password=employer2020' -d 'grant_type=password' -d 'client_id=backend' `
+KEYCLOAK_RESPONSE=`curl -s -X POST https://keycloak11.aible.app/auth/realms/aible/protocol/openid-connect/token  -H "Content-Type: application/x-www-form-urlencoded" -d 'username=employer' -d 'password=employer2020' -d 'grant_type=password' -d 'client_id=backend' `
 #echo $KEYCLOAK_RESPONSE
 #printf "${RED}Parsing access_token field, as we don't need the other elements:${NORMAL}\n"
 TOKEN=`echo "$KEYCLOAK_RESPONSE" | jq -r '.access_token'`
