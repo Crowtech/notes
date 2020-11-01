@@ -82,11 +82,16 @@ url=$1
 key=$2
 tag=$3
 echo ${mydate} $key $url  $message $tag
-KEYCLOAK_RESPONSE=`curl -s -X POST https://keycloak11.aible.app/auth/realms/aible/protocol/openid-connect/token  -H "Content-Type: application/x-www-form-urlencoded" -d 'username=employer' -d 'password=employer2020' -d 'grant_type=password' -d 'client_id=backend' `
+access_token=$(\
+    curl -s -X POST https://keycloak11.aible.app/auth/realms/aible/protocol/openid-connect/token \
+    --user backend:9997a0ce-c014-4873-a24b-ed84bd9d995b  \
+    -H 'content-type: application/x-www-form-urlencoded' \
+    -d 'username=employer&password=employer2020&grant_type=password' | jq --raw-output '.access_token' \
+ )
 #echo $KEYCLOAK_RESPONSE
 #printf "${RED}Parsing access_token field, as we don't need the other elements:${NORMAL}\n"
 TOKEN=`echo "$KEYCLOAK_RESPONSE" | jq -r '.access_token'`
-#echo $TOKEN
+TOKEN=$access_token
 echo ""
 CR=`curl -X GET "${url}/v7/notes/${key}"  --header "Authorization: Bearer $TOKEN" -H "accept: */*" -H "Content-Type: application/json"  --header 'Accept: application/json'  `
 echo -e "${Green}${CR}${Color_Off}\n"
