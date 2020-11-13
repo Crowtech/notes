@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version=7.0.0  #$(grep 'git.build.version')
+version=1.0.1  #$(grep 'git.build.version')
 pwd=${PWD##*/}
 function prop() {
   grep "${1}=" ${file} | cut -d'=' -f2
