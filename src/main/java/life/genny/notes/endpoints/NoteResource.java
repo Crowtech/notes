@@ -161,6 +161,7 @@ public class NoteResource {
 	@Transactional
 	public Response getNotesByTargetCodeAndTags(@PathParam("targetCode") final String targetCode,
 			@QueryParam("tags") @DefaultValue("") String tags,
+			@QueryParam("sorts") @DefaultValue("created") String sorts,
 			@QueryParam("pageIndex") @DefaultValue("0") Integer pageIndex,
 			@QueryParam("pageSize") @DefaultValue("20") Integer pageSize) {
 		// Object userName = this.idToken.getClaim("preferred_username");
@@ -173,7 +174,7 @@ public class NoteResource {
 
 		List<String> tagStringList = Arrays.asList(StringUtils.splitPreserveAllTokens(tags, ","));
 		List<Tag> tagList = tagStringList.stream().collect(Collectors.mapping(p -> new Tag(p), Collectors.toList()));
-		QDataNoteMessage notes = Note.findByTargetAndTags(userToken, tagList, targetCode, Page.of(pageIndex, pageSize));
+		QDataNoteMessage notes = Note.findByTargetAndTags(userToken, tagList, targetCode, sorts, Page.of(pageIndex, pageSize));
 
 		return Response.status(Status.OK).entity(notes).build();
 	}
