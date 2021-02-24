@@ -84,10 +84,10 @@ tag=$4
 url=$1
 echo ${mydate} ${url}  $key $message $tag
 access_token=$(\
-    curl -s -X POST https://keycloak.aible.app/auth/realms/aible/protocol/openid-connect/token \
+    curl -s -X POST https://keycloak11.aible.app/auth/realms/aible/protocol/openid-connect/token \
     --user backend:9997a0ce-c014-4873-a24b-ed84bd9d995b  \
     -H 'content-type: application/x-www-form-urlencoded' \
-    -d 'username=user1&password=NarelleRachel2020&grant_type=password' | jq --raw-output '.access_token' \
+    -d 'username=employer&password=employer2020&grant_type=password' | jq --raw-output '.access_token' \
  )
 #echo $KEYCLOAK_RESPONSE
 #printf "${RED}Parsing access_token field, as we don't need the other elements:${NORMAL}\n"
@@ -96,7 +96,7 @@ TOKEN=$access_token
 echo $TOKEN
 echo $url
 echo ""
-CR=`curl -X POST "${url}/v7/notes"  --header "Authorization: Bearer $TOKEN" -H "accept: */*" -H "Content-Type: application/json"  --header 'Accept: application/json'  -d "{\"id\":0,\"content\":\"${message}\",\"created\":\"${mydate}\",\"sourceCode\":\"PER_USER1\",\"tags\":[{\"name\":\"${tag}\",\"value\":0}],\"targetCode\":\"${key}\",\"updated\":\"${mydate}\"}"`
+CR=`curl -X POST "${url}/v7/notes"  --header "Authorization: Bearer $TOKEN" -H "accept: */*" -H "Content-Type: application/json"  --header 'Accept: application/json'  -d "{\"id\":0,\"content\":\"${message}\",\"created\":\"${mydate}\",\"sourceCode\":\"${key}\",\"tags\":[{\"name\":\"${tag}\",\"value\":0}],\"targetCode\":\"${key}\",\"updated\":\"${mydate}\"}"`
 #CR=`curl -X POST "https://aible-notes.crowtech.com.au/v7/notes"  --header "Authorization: Bearer $TOKEN" -H "accept: */*" -H "Content-Type: application/json"  --header 'Accept: application/json'  -d "{\"id\":0,\"content\":\"${message}\",\"created\":\"${mydate}\",\"sourceCode\":\"PER_USER1\",\"tags\":\"${tag}:0\",\"targetCode\":\"${key}\",\"updated\":\"${mydate}\"}"`
 echo -e "${Green}${CR}${Color_Off}\n"
 echo ""

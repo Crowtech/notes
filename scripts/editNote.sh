@@ -82,13 +82,18 @@ url=$1
 id=$2
 content=$3
 #echo ${mydate} $url $id $content 
-KEYCLOAK_RESPONSE=`curl -s -X POST https://keycloak.aible.app/auth/realms/aible/protocol/openid-connect/token  -H "Content-Type: application/x-www-form-urlencoded" -d 'username=employer' -d 'password=employer2020' -d 'grant_type=password' -d 'client_id=backend' `
+access_token=$(\
+    curl -s -X POST https://keycloak11.aible.app/auth/realms/aible/protocol/openid-connect/token \
+    --user backend:9997a0ce-c014-4873-a24b-ed84bd9d995b  \
+    -H 'content-type: application/x-www-form-urlencoded' \
+    -d 'username=employer&password=employer2020&grant_type=password' | jq --raw-output '.access_token' \
+ )
 #echo $KEYCLOAK_RESPONSE
 #printf "${RED}Parsing access_token field, as we don't need the other elements:${NORMAL}\n"
 TOKEN=`echo "$KEYCLOAK_RESPONSE" | jq -r '.access_token'`
-echo $TOKEN
+TOKEN=$access_token
 echo ""
-CR=`curl -X PUT "${url}/v7/notes/${id}"  --header "Authorization: Bearer $TOKEN" -H "accept: */*" -H "Content-Type: application/json" -d "{\"id\":${id},\"content\":\"${content}\",\"created\":\"2020-07-02T00:51:20.258Z\",\"sourceCode\":\"PER_USER1\",\"tags\":[{\"name\":\"test\",\"value\":2}],\"targetCode\":\"PER_USER1\"}" --header 'Accept: application/json'  `
+CR=`curl -X PUT "${url}/v7/notes/${id}"  --header "Authorization: Bearer $TOKEN" -H "accept: */*" -H "Content-Type: application/json" -d "{\"id\":${id},\"content\":\"${content}\",\"created\":\"2020-07-02T00:51:20.258Z\",\"tags\":[{\"name\":\"test\",\"value\":2}],\"targetCode\":\"PER_USER1\"}" --header 'Accept: application/json'  `
 CR2=`echo $CR | tr '\r\n' ' ' | jq . `
 echo -e "${Green}${CR2}${Color_Off}\n"
 echo ""

@@ -109,16 +109,15 @@ public class Note extends PanacheEntity {
 	}
 
 	public static QDataNoteMessage findByTargetAndTags(final GennyToken userToken, final List<Tag> tags, final String targetCode,
-			Page page) {
+			String sorts, Page page) {
 		List<String> tagStringList = tags.stream().collect(Collectors.mapping(p -> p.getName(), Collectors.toList()));
 
 		PanacheQuery<Note> notes = null;
 		Long total = 0L;
 
-
 		if (!tagStringList.isEmpty()) {
 			notes = Note.find(
-					"select n from Note n JOIN n.tags t where n.realm = :realm and t.name in (:tags) and n.targetCode = :targetCode  order by n.created",
+					"select n from Note n JOIN n.tags t where n.realm = :realm and t.name in (:tags) and n.targetCode = :targetCode  order by n." + sorts,
 					Parameters.with("realm",  userToken.getRealm()).and("targetCode", targetCode).and("tags", tagStringList));
 			if (notes.count()>0 ) {
 				total = Note.count("from Note n JOIN n.tags t where n.realm = :realm and t.name in (:tags) and n.targetCode = :targetCode ",
@@ -127,7 +126,7 @@ public class Note extends PanacheEntity {
 
 		} else {
 			notes = Note.find(
-					"select n from Note n  where n.realm = :realm  and n.targetCode = :targetCode  order by n.created",
+					"select n from Note n  where n.realm = :realm  and n.targetCode = :targetCode  order by n." + sorts,
 					Parameters.with("realm",  userToken.getRealm()).and("targetCode", targetCode));
 			if (notes.count()>0 ) {
 				total = Note.count("realm = :realm  and targetCode = :targetCode",
