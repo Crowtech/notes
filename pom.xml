@@ -20,7 +20,11 @@
 		<quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
 		<quarkus.platform.version>1.12.0.Final</quarkus.platform.version>
 		<qwanda.version>${project.version}</qwanda.version>
+<<<<<<< HEAD
 		<surefire.version>3.0.0-M5</surefire.version>
+=======
+		<surefire.version>2.22.0</surefire.version>
+>>>>>>> b74a9122159e52020da1b0b75ca0a2ddc17a9fca
 		<testcontainers.version>1.15.1</testcontainers.version>
 		<jandex.version>1.0.7</jandex.version>
 	</properties>
